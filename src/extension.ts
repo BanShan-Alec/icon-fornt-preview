@@ -3,6 +3,7 @@ import { name as extName } from '../package.json';
 import { getConfig } from './utils/config';
 import { IconService } from './service/icon';
 import { registerHover } from './provider/hover';
+import { registerCommands } from './provider/commands';
 
 export async function activate(context: ExtensionContext) {
     console.log(`${extName} is activated`);
@@ -13,6 +14,9 @@ export async function activate(context: ExtensionContext) {
     context.subscriptions.push(configChangeListener);
     registerHover(context, {
         ...config,
+    });
+    registerCommands(context, {
+        extName,
     });
 }
 export function deactivate() {
