@@ -1,3 +1,4 @@
+import { isAbsolute, resolve } from 'path';
 import { workspace } from 'vscode';
 
 export interface IConfig {
@@ -18,6 +19,15 @@ export const DEFAULT_CONFIG: IConfig = {
     entries: [],
 };
 
+const handleLocalPath = (localPath: string) => {
+    const workspaceFolders = workspace.workspaceFolders;
+    const isWorkspaceEmpty = !workspaceFolders || workspaceFolders.length === 0;
+    if (isAbsolute(localPath) || isWorkspaceEmpty) {
+        return localPath;
+    }
+    return resolve(workspaceFolders[0].uri.fsPath, localPath);
+};
+
 export const getConfig = (name: string) => {
     const orginConfig = workspace.getConfiguration(name);
     const config: IConfig = { ...DEFAULT_CONFIG };
@@ -28,6 +38,12 @@ export const getConfig = (name: string) => {
 
         if (value) {
             config[key] = value;
+        }
+        if (key === 'entries') {
+            config[key] = value.map((entry: any) => ({
+                ...entry,
+                localPath: handleLocalPath(entry.localPath),
+            }));
         }
     });
 
