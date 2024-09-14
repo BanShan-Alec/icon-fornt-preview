@@ -14,7 +14,7 @@ export interface IConfig {
 }
 
 export const DEFAULT_CONFIG: IConfig = {
-    tagName: 'icon',
+    tagName: 'Icon',
     propName: 'name',
     entries: [],
 };

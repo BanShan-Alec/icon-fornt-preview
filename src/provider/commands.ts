@@ -4,6 +4,8 @@ import { getConfig } from '../utils/config';
 import { IconService } from '../service/icon';
 import { IIconFontInfo } from '../utils/parser';
 import { downloadIconFont, saveIconFont } from '../utils/download';
+import { DEFAULT_COMMIT_MESSAGE } from '../utils/constant';
+import { genCommit } from '../utils/git';
 
 export function registerCommands(
     ctx: ExtensionContext,
@@ -33,7 +35,25 @@ export function registerCommands(
             // 更新成功，reload config
             const config = getConfig(extName);
             IconService.load(config.entries);
-            // TODO 更新成功，自动提交git commit
+        })
+    );
+    ctx.subscriptions.push(
+        commands.registerCommand(`${extName}.update-icons-auto-commit`, async () => {
+            for (let index = 0; index < IconService.getIconFontList().length; index++) {
+                const info = IconService.getIconFontList()[index];
+                await updateIcon(info);
+            }
+            // 更新成功，reload config
+            const config = getConfig(extName);
+            IconService.load(config.entries);
+            // 显示输入框
+            const userInput = await window.showInputBox({
+                placeHolder: 'please input your commit message',
+                prompt: `enter empty message will use: ${DEFAULT_COMMIT_MESSAGE}`,
+            });
+            // 生成commit
+            const filePaths = config.entries.map((entry) => entry.localPath);
+            genCommit(filePaths, userInput || DEFAULT_COMMIT_MESSAGE);
         })
     );
 

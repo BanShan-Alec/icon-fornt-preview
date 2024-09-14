@@ -9,3 +9,4 @@ export const gePropNameTernaryReg = (tagName: string, propName: string) => [
 export const LANGUAGE_IDS = ['vue', 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'html'];
 export const DARK_COLOR = '#FFFFFFB2';
 export const LIGHT_COLOR = '#55585C';
+export const DEFAULT_COMMIT_MESSAGE = 'chore(icons): update icons';
