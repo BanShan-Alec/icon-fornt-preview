@@ -1,9 +1,10 @@
-import type { ExtensionContext, HoverProvider } from 'vscode';
-import { Hover, Position, Range, languages } from 'vscode';
+import { CompletionItem, CompletionItemKind, Position, Range, languages } from 'vscode';
+import type { CompletionItemProvider, ExtensionContext } from 'vscode';
 import { gePropNameTernaryReg, getPropNameReg, LANGUAGE_IDS } from '../utils/constant';
+import { IconService } from '../service/icon';
 import { getIconMarkDown } from '../utils/markdown';
 
-export function registerHover(
+export function registerCompletion(
     context: ExtensionContext,
     options: {
         tagName: string;
@@ -14,8 +15,8 @@ export function registerHover(
     const PROP_NAME_RE = getPropNameReg(tagName, propName);
     const PROP_NAME_TERNARY_RE = gePropNameTernaryReg(tagName, propName);
 
-    const hoverProvider: HoverProvider = {
-        provideHover(document, position) {
+    const iconProvider: CompletionItemProvider = {
+        provideCompletionItems(document, position) {
             // 判断是否符合tagName & propName的正则，例如<Icon name="xxx" />
             const line = document.getText(
                 new Range(
@@ -23,16 +24,19 @@ export function registerHover(
                     new Position(position.line, position.character)
                 )
             );
+
             if (!PROP_NAME_RE.test(line) && !PROP_NAME_TERNARY_RE.some((reg) => reg.test(line))) return null;
 
-            // 匹配到propName，查询icon
-            const word = document.getText(document.getWordRangeAtPosition(position));
-            const markdownString = getIconMarkDown(word);
-            if (!markdownString) return null;
+            const completionItems: CompletionItem[] = IconService.getAllIconSymbol().map((symbol) => {
+                const item = new CompletionItem(symbol, CompletionItemKind.Color);
+                // item.detail = symbol;
+                item.documentation = getIconMarkDown(symbol);
+                return item;
+            });
 
-            return new Hover(markdownString);
+            return completionItems;
         },
     };
 
-    context.subscriptions.push(languages.registerHoverProvider(LANGUAGE_IDS, hoverProvider));
+    context.subscriptions.push(languages.registerCompletionItemProvider(LANGUAGE_IDS, iconProvider, '"', "'"));
 }

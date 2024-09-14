@@ -4,6 +4,7 @@ import { getConfig } from './utils/config';
 import { IconService } from './service/icon';
 import { registerHover } from './provider/hover';
 import { registerCommands } from './provider/commands';
+import { registerCompletion } from './provider/completion';
 
 export async function activate(context: ExtensionContext) {
     console.log(`${extName} is activated`);
@@ -18,6 +19,9 @@ export async function activate(context: ExtensionContext) {
     registerCommands(context, {
         extName,
     });
+    registerCompletion(context, {
+        ...config,
+    });
 }
 export function deactivate() {
     // 插件停用时的清理工作
@@ -26,7 +30,7 @@ export function deactivate() {
 
 const configChangeListener = workspace.onDidChangeConfiguration((event) => {
     // 检查特定配置是否发生变化
-    if (event.affectsConfiguration(extName)) {
+    if (event.affectsConfiguration(`${extName}.entries`)) {
         // 处理配置变化
         const config = getConfig(extName);
         console.log(`配置已更改: ${config}`);

@@ -57,6 +57,6 @@ export class IconService {
     }
 
     static getAllIconSymbol() {
-        return this.iconItemMap.keys();
+        return Array.from(this.iconItemMap.keys());
     }
 }
