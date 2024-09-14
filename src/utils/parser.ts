@@ -1,10 +1,12 @@
 import fs from 'fs';
 import { parseFragment, serializeOuter, DefaultTreeAdapterMap } from 'parse5';
+import { isTruthy } from '.';
 
 export interface IIconItem {
     symbol: string;
     code: string;
     isFilledColor?: boolean;
+    projectId?: string;
 }
 
 export interface IIconFontInfo {
@@ -74,9 +76,10 @@ export async function getIconFontInfo(path: string): Promise<IIconFontInfo> {
                 symbol: child.attrs?.find((attr) => attr.name === 'id')?.value || '',
                 code: serializeOuter(transformSymbolToSvg(child)),
                 isFilledColor: isSvgFilledColor(child),
+                projectId,
             };
         })
-        .filter(Boolean) as IIconItem[];
+        .filter(isTruthy);
 
     return {
         projectId,

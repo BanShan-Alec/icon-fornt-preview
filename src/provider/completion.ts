@@ -30,7 +30,7 @@ export function registerCompletion(
             const completionItems: CompletionItem[] = IconService.getAllIconSymbol().map((symbol) => {
                 const item = new CompletionItem(symbol, CompletionItemKind.Color);
                 // item.detail = symbol;
-                item.documentation = getIconMarkDown(symbol);
+                item.documentation = getIconMarkDown(symbol, { onlyIcon: true });
                 return item;
             });
 

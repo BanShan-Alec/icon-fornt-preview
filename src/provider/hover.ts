@@ -27,7 +27,9 @@ export function registerHover(
 
             // 匹配到propName，查询icon
             const word = document.getText(document.getWordRangeAtPosition(position));
-            const markdownString = getIconMarkDown(word);
+            const markdownString = getIconMarkDown(word, {
+                fontSize: 64,
+            });
             if (!markdownString) return null;
 
             return new Hover(markdownString);

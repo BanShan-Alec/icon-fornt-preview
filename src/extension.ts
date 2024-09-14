@@ -33,7 +33,7 @@ const configChangeListener = workspace.onDidChangeConfiguration((event) => {
     if (event.affectsConfiguration(`${extName}.entries`)) {
         // 处理配置变化
         const config = getConfig(extName);
-        console.log(`配置已更改: ${config}`);
+        console.log(`配置已更改: ${JSON.stringify(config)}`);
         // TODO iconfont.js 内容变化时，要触发重新Load
         IconService.load(config.entries);
     }
