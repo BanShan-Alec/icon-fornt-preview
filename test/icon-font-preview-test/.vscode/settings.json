@@ -1,7 +1,7 @@
 {
-    "icon-font-preview.tagName": "wyg-icon",
-    "icon-font-preview.propName": "id",
-    "icon-font-preview.entries": [
+    "iconfont-js-helper.tagName": "Icon",
+    "iconfont-js-helper.propName": "name",
+    "iconfont-js-helper.entries": [
         {
             "localPath": "./iconfont.js",
             "remotePath": "https://at.alicdn.com/t/c/font_4172623_rfo0lkc7zd.js"

@@ -18,11 +18,11 @@
 # 方法2：.vscode/settings.json
 ```json
 {
-    "icon-font-preview.parser": "iconfont",
-    "icon-font-preview.tagName": "my-icon",
-    "icon-font-preview.propName": "name",
+    "iconfont-js-helper.parser": "iconfont",
+    "iconfont-js-helper.tagName": "my-icon",
+    "iconfont-js-helper.propName": "name",
     // 提取图标的文件路径,本地路径或者网络路径
-    "icon-font-preview.target": "https://at.alicdn.com/t/c/font_4000788_1bqyuxtf29e.js"
+    "iconfont-js-helper.target": "https://at.alicdn.com/t/c/font_4000788_1bqyuxtf29e.js"
 }
 ```
 
