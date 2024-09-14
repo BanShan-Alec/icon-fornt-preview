@@ -27,9 +27,10 @@ export class IconService {
                 });
                 this.iconItemList.concat(iconFontInfo.items);
                 iconFontInfo.items.forEach((item) => {
-                    const key = item.symbol;
+                    let key = item.symbol;
                     if (this.iconItemMap.has(key)) {
-                        console.warn('IconService load error: icon symbol is same!', entry, item.symbol);
+                        key = `${item.symbol}_${item.projectId}_CLASH_SYMBOL_NO_USE`;
+                        console.warn('IconService load error: icon symbol is clash!', entry, key);
                     }
                     this.iconItemMap.set(key, item);
                 });
