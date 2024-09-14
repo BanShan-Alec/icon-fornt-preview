@@ -3,7 +3,7 @@ import fs from 'fs';
 import { getHash, isNetworkUrl } from '.';
 
 export function downloadIconFont(url: string) {
-    if (!isNetworkUrl(url)) throw 'invalid remotePath!';
+    if (!isNetworkUrl(url)) throw new Error('remotePath is not a network url');
 
     return new Promise<string>((resolve, reject) => {
         const request = https.get(url, (res) => {
@@ -41,9 +41,8 @@ export async function checkNeedUpdate(localPath: string, code: string) {
 }
 
 export async function saveIconFont(localPath: string, code: string) {
-    if (await checkNeedUpdate(localPath, code)) {
-        console.log('[saveIconFont] no change', localPath);
-        return;
+    if (!(await checkNeedUpdate(localPath, code))) {
+        throw new Error('iconfont.js is lastest! no need update');
     }
 
     // 保存文件

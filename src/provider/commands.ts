@@ -40,12 +40,12 @@ export function registerCommands(
     async function updateIcon(info: IIconFontInfo) {
         const { remotePath, localPath } = info;
         try {
-            if (!remotePath) throw 'remotePath isEmpty';
+            if (!remotePath) throw new Error('remotePath is empty');
             const code = await downloadIconFont(remotePath);
             await saveIconFont(localPath, code);
             window.showInformationMessage(`${extName}.update-icons success: ${localPath}`);
         } catch (error: any) {
-            window.showInformationMessage(`${extName}.update-icons fail: ${localPath}, ${error.message}`);
+            window.showInformationMessage(`${extName}.update-icons fail: ${error.message}, ${localPath}`);
         }
     }
 }

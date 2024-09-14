@@ -30,7 +30,7 @@ export function registerHover(
             const markdownString = getIconMarkDown(word, {
                 fontSize: 64,
             });
-            if (!markdownString) return null;
+            if (!markdownString) return new Hover('No icon found');
 
             return new Hover(markdownString);
         },

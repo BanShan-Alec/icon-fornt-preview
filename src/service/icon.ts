@@ -15,6 +15,7 @@ export class IconService {
             return;
         }
         IconService.reset();
+        console.time('IconService load escape');
         for (let index = 0; index < entries.length; index++) {
             const entry = entries[index];
             try {
@@ -36,6 +37,8 @@ export class IconService {
                 console.log('IconService load error: this entry is invalid ', entry, error.message);
             }
         }
+        console.log('IconService load success: ', this.getAllIconSymbol());
+        console.timeEnd('IconService load escape');
     }
 
     static reset() {
