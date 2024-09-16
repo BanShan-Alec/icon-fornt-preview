@@ -24,18 +24,14 @@
 ## Use RemotePath
 > get remotePath from `Ali`，remotePath is `Optional` config
 
-![ali-icon](https://github.com/zhoutengshen/icon-fornt-preview/blob/main/doc/ali-icon.png)
+![ali-icon](https://github.com/BanShan-Alec/icon-fornt-preview/blob/main/assets/ali-icon.png)
 
 
 ## Mouse hover
-![hover](https://github.com/zhoutengshen/icon-fornt-preview/blob/main/doc/dome.jpg)
-
-![image-20240916161355996](README.assets/image-20240916161355996.png)
-
-![image-20240916161136192](README.assets/image-20240916161136192.png)
+![hover](https://github.com/BanShan-Alec/icon-fornt-preview/blob/main/assets/hover.png)
 
 ## Code completion
-![completion](https://github.com/zhoutengshen/icon-fornt-preview/blob/main/doc/dome-hover.png)
+![completion](https://github.com/BanShan-Alec/icon-fornt-preview/blob/main/assets/complet.png)
 
 ## Update Icons
 
@@ -43,4 +39,4 @@
 >
 > It also support auto git commit after all iconfont.js update success.
 
-![image-20240916160457874](README.assets/image-20240916160457874.png)
+![update](https://github.com/BanShan-Alec/icon-fornt-preview/blob/main/assets/update-cmd.png)
