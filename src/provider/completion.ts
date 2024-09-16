@@ -25,7 +25,7 @@ export function registerCompletion(
                 )
             );
 
-            if (!PROP_NAME_RE.test(line) && !PROP_NAME_TERNARY_RE.some((reg) => reg.test(line))) return null;
+            if (!PROP_NAME_RE.test(line) && !PROP_NAME_TERNARY_RE.some((reg) => reg.test(line))) {return null;}
 
             const completionItems: CompletionItem[] = IconService.getAllIconSymbol().map((symbol) => {
                 const item = new CompletionItem(symbol, CompletionItemKind.Color);

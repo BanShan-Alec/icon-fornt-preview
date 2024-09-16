@@ -23,14 +23,14 @@ export function registerHover(
                     new Position(position.line, position.character)
                 )
             );
-            if (!PROP_NAME_RE.test(line) && !PROP_NAME_TERNARY_RE.some((reg) => reg.test(line))) return null;
+            if (!PROP_NAME_RE.test(line) && !PROP_NAME_TERNARY_RE.some((reg) => reg.test(line))) {return null;}
 
             // 匹配到propName，查询icon
             const word = document.getText(document.getWordRangeAtPosition(position));
             const markdownString = getIconMarkDown(word, {
                 fontSize: 64,
             });
-            if (!markdownString) return new Hover('No icon found');
+            if (!markdownString) {return new Hover('No icon found');}
 
             return new Hover(markdownString);
         },

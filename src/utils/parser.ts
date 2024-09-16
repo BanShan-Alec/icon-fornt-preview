@@ -40,7 +40,7 @@ function transformSymbolToSvg(symbol: DefaultTreeAdapterMap['element']) {
 
 function isSvgFilledColor(svg: DefaultTreeAdapterMap['element']) {
     return svg.childNodes.some((child) => {
-        if (child.nodeName !== 'path') return false;
+        if (child.nodeName !== 'path') {return false;}
         const fill = child.attrs?.find((attr) => attr.name === 'fill')?.value;
         return fill && !['none', 'transparent', 'inherit', 'currentColor', 'url(#gradient)'].includes(fill);
     });
@@ -70,7 +70,7 @@ export async function getIconFontInfo(path: string): Promise<IIconFontInfo> {
     // parse code To IconItem
     const items = Array.from(svgDom.childNodes)
         .map((child) => {
-            if (child.nodeName !== 'symbol') return;
+            if (child.nodeName !== 'symbol') {return;}
 
             return {
                 symbol: child.attrs?.find((attr) => attr.name === 'id')?.value || '',

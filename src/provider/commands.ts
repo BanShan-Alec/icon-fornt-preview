@@ -60,7 +60,7 @@ export function registerCommands(
     async function updateIcon(info: IIconFontInfo) {
         const { remotePath, localPath } = info;
         try {
-            if (!remotePath) throw new Error('remotePath is empty');
+            if (!remotePath) {throw new Error('remotePath is empty');}
             const code = await downloadIconFont(remotePath);
             await saveIconFont(localPath, code);
             window.showInformationMessage(`${extName}.update-icons success: ${localPath}`);

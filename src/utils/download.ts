@@ -3,7 +3,7 @@ import fs from 'fs';
 import { getHash, isNetworkUrl } from '.';
 
 export function downloadIconFont(url: string) {
-    if (!isNetworkUrl(url)) throw new Error('remotePath is not a network url');
+    if (!isNetworkUrl(url)) {throw new Error('remotePath is not a network url');}
 
     return new Promise<string>((resolve, reject) => {
         const request = https.get(url, (res) => {
