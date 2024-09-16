@@ -10,12 +10,12 @@
         {
             // Relative path: default relative to current workspace
             "localPath": "./iconfont.js",
-            "remotePath": "https://at.alicdn.com/t/c/font_4172623_rfo0lkc7zd.js"
+            "remotePath": "https://at.alicdn.com/t/c/xxx.js"
         },
         {
             // Absolute path
             "localPath": "G:/icon-fornt-preview/test/icon-font-preview-test/iconfont copy.js",
-            "remotePath": "https://at.alicdn.com/t/c/font_3764609_3s7v85xv8iq.js"
+            "remotePath": "https://at.alicdn.com/t/c/xxx.js"
         }
     ]
 }
