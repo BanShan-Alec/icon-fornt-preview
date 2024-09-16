@@ -1,9 +1,17 @@
 {
   "name": "iconfont-js-helper",
   "displayName": "iconfont-js-helper",
-  "description": "iconfont.js预览，支持远程更新",
+  "description": "阿里平台的iconfont.js预览，支持远程更新",
   "version": "1.0.0",
   "publisher": "BanshanAlecPublisher",
+  "repository": "https://github.com/BanShan-Alec/less-vars.git",
+  "keywords": [
+    "ali",
+    "iconfont",
+    "iconfont.js",
+    "iconfont preview"
+  ],
+  "icon": "./assets/icon.png",
   "engines": {
     "vscode": "^1.89.0"
   },

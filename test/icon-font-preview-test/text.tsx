@@ -20,7 +20,7 @@ let test = (props: IProps) => {
     //组件渲染
     return (
         <div>
-            <Icon name="icon-tishizhuangtailei_cuowu" />
+            <Icon name="icon-ic_changdi" />
         </div>
     );
 };

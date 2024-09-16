@@ -1,37 +1,46 @@
-# 如何使用：
-### 方法1：在项目中创建 .vscode/icon-preview.config.json 文件, 或者项目根创建 .vscode/settings.json 文件
+# How to Use
 
+## Config
+> edit `.vscode/settings.json`
 ```json
 {
-    // 标签名称,例如：<my-icon name="close" />的<my-ico
-    "tagName": "my-icon",
-    // 图标对应的属性名称，用于正则匹配，例如 <my-icon proName="close" />的proName
-    "propName": "name",
-    // 被提取图标的文件路径，例如放在项目根下面的iconfont.js
-    // iconfont.js 是阿里图标的 Symbol 图标。例如：https://at.alicdn.com/t/c/font_4000788_1bqyuxtf29e.js
-    "target": "iconfont.js", 
-    // 转换器类型：用于如何提取图标信息，当前只实现了阿里图标，可选值: "iconfont"
-    "parser": "iconfont"
-}
-```
-
-# 方法2：.vscode/settings.json
-```json
-{
-    "iconfont-js-helper.parser": "iconfont",
-    "iconfont-js-helper.tagName": "my-icon",
+    "iconfont-js-helper.tagName": "Icon",
     "iconfont-js-helper.propName": "name",
-    // 提取图标的文件路径,本地路径或者网络路径
-    "iconfont-js-helper.target": "https://at.alicdn.com/t/c/font_4000788_1bqyuxtf29e.js"
+    "iconfont-js-helper.entries": [
+        {
+            // Relative path: default relative to current workspace
+            "localPath": "./iconfont.js",
+            "remotePath": "https://at.alicdn.com/t/c/font_4172623_rfo0lkc7zd.js"
+        },
+        {
+            // Absolute path
+            "localPath": "G:/icon-fornt-preview/test/icon-font-preview-test/iconfont copy.js",
+            "remotePath": "https://at.alicdn.com/t/c/font_3764609_3s7v85xv8iq.js"
+        }
+    ]
 }
 ```
 
-### 获取阿里图标的Symbol 图标(target)
+## Use RemotePath
+> get remotePath from `Ali`，remotePath is `Optional` config
+
 ![ali-icon](https://github.com/zhoutengshen/icon-fornt-preview/blob/main/doc/ali-icon.png)
 
 
-### 鼠标悬停
+## Mouse hover
 ![hover](https://github.com/zhoutengshen/icon-fornt-preview/blob/main/doc/dome.jpg)
 
-### 提示
+![image-20240916161355996](README.assets/image-20240916161355996.png)
+
+![image-20240916161136192](README.assets/image-20240916161136192.png)
+
+## Code completion
 ![completion](https://github.com/zhoutengshen/icon-fornt-preview/blob/main/doc/dome-hover.png)
+
+## Update Icons
+
+> After setting a valid remotePath，you can `Update Icons` with commands.
+>
+> It also support auto git commit after all iconfont.js update success.
+
+![image-20240916160457874](README.assets/image-20240916160457874.png)
