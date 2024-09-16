@@ -1,80 +1,66 @@
-import { IParserResult } from "../parser/basic";
-import { ParserFactory } from "../parser/factory";
-import { parsePropValue } from "../utils/ui";
-import { CacheService } from "./cache";
-import ConfigService from "./config";
-
+import { isEmpty } from 'lodash';
+import { IConfig } from '../utils/config';
+import { getIconFontInfo, IIconFontInfo, IIconItem } from '../utils/parser';
 export class IconService {
-
     // 列表
-    private static iconList: IParserResult[] | null = null;
-    // 名称-图片 Map 映射（用于快速数据查找）
-    private static iconMap = new Map<string, IParserResult>();
-
+    private static iconItemList: IIconItem[] = [];
+    private static iconFontList: IIconFontInfo[] = [];
+    // Map 映射（用于快速数据查找）
+    private static iconItemMap = new Map<string, IIconItem>();
 
     /** 加载图标 */
-    static async load() {
-        const configList = await ConfigService.getInstance().getWorkspaceConfig();
-        if (configList.length) {
-            console.log("加载图标");
+    static async load(entries: IConfig['entries']) {
+        if (isEmpty(entries)) {
+            console.log('IconService load error: entries isEmpty');
+            return;
         }
-        const resultPromiseList = configList.map(async config => {
-            const cacheId = ParserFactory.getParser(config).genCacheId(config);
-            if (cacheId) {
-                const cacheIconList = await CacheService.getCache(cacheId);
-                if (cacheIconList?.length) {
-                    return cacheIconList;
-                }
-            }
-            const resultList = await ParserFactory.transform(config);
-            if (cacheId) {
-                CacheService.setCache(cacheId, resultList);
-            }
-            return resultList;
-        });
-        // [][]
-        const resultList = (await Promise.all(resultPromiseList)).flat();
-        this.iconList = resultList;
+        IconService.reset();
+        console.time('IconService load escape');
+        for (let index = 0; index < entries.length; index++) {
+            const entry = entries[index];
+            try {
+                const iconFontInfo = await getIconFontInfo(entry.localPath);
 
-        // 获取映射数据
-        this.iconMap.clear();
-        resultList.forEach(icon => {
-            this.iconMap.set(icon.name, icon);
-        });
-        return this.iconList;
+                this.iconFontList.push({
+                    ...iconFontInfo,
+                    remotePath: entry.remotePath,
+                });
+                this.iconItemList.concat(iconFontInfo.items);
+                iconFontInfo.items.forEach((item) => {
+                    let key = item.symbol;
+                    if (this.iconItemMap.has(key)) {
+                        key = `${item.symbol}_${item.projectId}_CLASH_SYMBOL_NO_USE`;
+                        console.warn('IconService load error: icon symbol is clash!', entry, key);
+                    }
+                    this.iconItemMap.set(key, item);
+                });
+            } catch (error: any) {
+                console.log('IconService load error: this entry is invalid ', entry, error.message);
+            }
+        }
+        console.log('IconService load success: ', this.getAllIconSymbol());
+        console.timeEnd('IconService load escape');
     }
 
-    /**
-     * 获取图标信息，如果已经加载过了，获取缓存
-     * @returns 
-     */
-    static getIconList() {
-        if (!this.iconList?.length) {
-            this.load();
-        }
-        return this.iconList || [];
-    };
-
-    /**
-     * 根据图标名称，获取图标配置
-     * @param name 
-     * @returns 
-     */
-    static getIconByIconName(name: string) {
-        if (!this.iconMap.size) {
-            this.load();
-        }
-        return this.iconMap.get(name);
+    static reset() {
+        this.iconFontList = [];
+        this.iconItemList = [];
+        this.iconItemMap.clear();
     }
 
-    /**
-     * 根据标签属性值获取图标配置
-     * @param propValue 
-     * @returns 
-     */
-    static getIconByPropValue(propValue: string) {
-        const iconNameList = parsePropValue(propValue);
-        const list = iconNameList.map(name => this.getIconByIconName(name));
-        return list.filter(item => !!item) as IParserResult[];
+    static getIconItemList() {
+        return this.iconItemList || [];
+    }
+
+    static getIconFontList() {
+        return this.iconFontList || [];
+    }
+
+    static getIconBySymbol(name: string) {
+        return this.iconItemMap.get(name);
+    }
+
+    static getAllIconSymbol() {
+        return Array.from(this.iconItemMap.keys());
     }
 }

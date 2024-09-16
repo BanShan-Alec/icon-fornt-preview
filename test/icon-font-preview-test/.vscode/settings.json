@@ -1,6 +1,14 @@
 {
-    "icon-font-preview.tagName": "wyg-icon",
-    "icon-font-preview.parser": "iconfont",
-    "icon-font-preview.target": "https://at.alicdn.com/t/c/font_4000788_1bqyuxtf29e.js",
-    "icon-font-preview.propName": "id"
+    "iconfont-js-helper.tagName": "Icon",
+    "iconfont-js-helper.propName": "name",
+    "iconfont-js-helper.entries": [
+        {
+            "localPath": "./iconfont.js",
+            "remotePath": "https://at.alicdn.com/t/c/font_4172623_rfo0lkc7zd.js"
+        },
+        {
+            "localPath": "./iconfont copy.js",
+            "remotePath": "https://at.alicdn.com/t/c/font_3764609_3s7v85xv8iq.js"
+        }
+    ]
 }

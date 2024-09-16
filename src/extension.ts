@@ -1,53 +1,40 @@
-import * as vscode from 'vscode';
-import { debounce } from './utils/index';
-import { Base64ImgHoverProvider } from './ui/hover-provider';
-import { Base64Decoration } from './ui/decoration';
-import { Base64CompletionItemProvider } from './ui/completion-provider';
-import { getFileType } from './utils/file';
-import ConfigService from './service/config';
+import { ExtensionContext, workspace } from 'vscode';
+import { name as extName } from '../package.json';
+import { getConfig } from './utils/config';
 import { IconService } from './service/icon';
+import { registerHover } from './provider/hover';
+import { registerCommands } from './provider/commands';
+import { registerCompletion } from './provider/completion';
 
-// 检查整个文档是否需要显示icon
-const checkAllDocHasIcon = (iconName = 'my-icon', prop = 'name') => {
-	const regStr = `<${iconName}.*? [:]{0,1}${prop}=['"](.+?)['"]`;
-	const reg = new RegExp(regStr);
-	return reg.test(vscode.window.activeTextEditor?.document.getText() || '');
-};
+export async function activate(context: ExtensionContext) {
+    console.log(`${extName} is activated`);
+    const config = getConfig(extName);
+    await IconService.load(config.entries);
 
-const enableFileTypes = ['html', 'vue', 'jsx', 'tsx'];
-
-export function activate(context: vscode.ExtensionContext) {
-	console.log('插件激活');
-	IconService.load();
-	const base64Decoration = new Base64Decoration();
-	const provider = vscode.languages.registerCompletionItemProvider(
-		enableFileTypes, new Base64CompletionItemProvider(),
-		'"',
-		'=',
-		' '
-	);
-	context.subscriptions.push(provider);
-
-	vscode.languages.registerHoverProvider(enableFileTypes, new Base64ImgHoverProvider());
-
-	vscode.window.onDidChangeActiveTextEditor((e) => {
-		base64Decoration.render();
-	});
-
-	let debounceFunc: ReturnType<typeof debounce>;
-	vscode.workspace.onDidChangeTextDocument(event => {
-		const fileType = getFileType(event.document.fileName, false);
-		if (!fileType || !enableFileTypes.includes(fileType)) {
-			return;
-		}
-		const config = ConfigService.getInstance().getCurWorkspaceConfigSync();
-		if (!checkAllDocHasIcon(config?.tagName, config?.propName)) {
-			base64Decoration.clear();
-			return;
-		}
-		debounceFunc = debounceFunc || debounce(() => {
-			base64Decoration.reRender();
-		}, 50);
-		debounceFunc();
-	});
+    // 注册命令
+    context.subscriptions.push(configChangeListener);
+    registerHover(context, {
+        ...config,
+    });
+    registerCommands(context, {
+        extName,
+    });
+    registerCompletion(context, {
+        ...config,
+    });
 }
+export function deactivate() {
+    // 插件停用时的清理工作
+    IconService.reset();
+}
+
+const configChangeListener = workspace.onDidChangeConfiguration((event) => {
+    // 检查特定配置是否发生变化
+    if (event.affectsConfiguration(`${extName}.entries`)) {
+        // 处理配置变化
+        const config = getConfig(extName);
+        console.log(`配置已更改: ${JSON.stringify(config)}`);
+        // TODO iconfont.js 内容变化时，要触发重新Load
+        IconService.load(config.entries);
+    }
+});

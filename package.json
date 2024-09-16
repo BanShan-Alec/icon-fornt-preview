@@ -1,9 +1,17 @@
 {
-  "name": "icon-font-preview",
-  "displayName": "icon-font-preview",
-  "description": "字体图标预览",
-  "version": "0.2.2",
-  "publisher": "zts",
+  "name": "iconfont-js-helper",
+  "displayName": "iconfont-js-helper",
+  "description": "阿里平台的iconfont.js预览，支持远程更新",
+  "version": "1.0.0",
+  "publisher": "BanshanAlecPublisher",
+  "repository": "https://github.com/BanShan-Alec/less-vars.git",
+  "keywords": [
+    "ali",
+    "iconfont",
+    "iconfont.js",
+    "iconfont preview"
+  ],
+  "icon": "./assets/icon.png",
   "engines": {
     "vscode": "^1.89.0"
   },
@@ -11,32 +19,41 @@
     "Other"
   ],
   "contributes": {
+    "commands": [
+      {
+        "command": "iconfont-js-helper.reload",
+        "category": "iconfont-js-helper",
+        "title": "Reload Config"
+      },
+      {
+        "command": "iconfont-js-helper.update-icons",
+        "category": "iconfont-js-helper",
+        "title": "Update All Icons By RemotePath"
+      },
+      {
+        "command": "iconfont-js-helper.update-icons-auto-commit",
+        "category": "iconfont-js-helper",
+        "title": "Update All Icons & Auto Commit"
+      }
+    ],
     "configuration": {
-      "title": "字体图标预览",
+      "type": "object",
+      "title": "iconfont-js-helper configuration",
       "properties": {
-        "icon-font-preview.tagName": {
+        "iconfont-js-helper.tagName": {
           "type": "string",
-          "default": "icon",
-          "description": "标签名称"
+          "default": "Icon",
+          "description": "<tagName name=\"xxx\" />"
         },
-        "icon-font-preview.propName": {
+        "iconfont-js-helper.propName": {
           "type": "string",
           "default": "name",
-          "description": "属性名称"
+          "description": "<Icon propName=\"xxx\" />"
         },
-        "icon-font-preview.target": {
-          "type": "string",
-          "default": "",
-          "description": "图标位置"
-        },
-        "icon-font-preview.parser": {
-          "type": "string",
-          "default": "none",
-          "enum": [
-            "none",
-            "iconfont"
-          ],
-          "description": "转换器"
+        "iconfont-js-helper.entries": {
+          "type": "array",
+          "default": [],
+          "description": "iconfont.js entries"
         }
       }
     }
@@ -45,10 +62,6 @@
     "onStartupFinished"
   ],
   "main": "./dist/extension.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/zhoutengshen/icon-fornt-preview"
-  },
   "scripts": {
     "vscode:prepublish": "npm run package",
     "compile": "webpack",
@@ -61,17 +74,24 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.89.0",
+    "@types/lodash": "^4.17.7",
     "@types/mocha": "^10.0.6",
     "@types/node": "18.x",
+    "@types/vscode": "^1.89.0",
     "@typescript-eslint/eslint-plugin": "^7.7.1",
     "@typescript-eslint/parser": "^7.7.1",
-    "eslint": "^8.57.0",
-    "typescript": "^5.4.5",
-    "ts-loader": "^9.5.1",
-    "webpack": "^5.91.0",
-    "webpack-cli": "^5.1.4",
     "@vscode/test-cli": "^0.0.9",
-    "@vscode/test-electron": "^2.3.9"
+    "@vscode/test-electron": "^2.3.9",
+    "eslint": "^8.57.0",
+    "ts-loader": "^9.5.1",
+    "tsx": "^4.19.0",
+    "typescript": "^5.4.5",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "packageManager": "pnpm@9.6.0+sha512.38dc6fba8dba35b39340b9700112c2fe1e12f10b17134715a4aa98ccf7bb035e76fd981cf0bb384dfa98f8d6af5481c2bef2f4266a24bfa20c34eb7147ce0b5e",
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "parse5": "^7.1.2"
   }
 }
