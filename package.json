@@ -2,7 +2,7 @@
   "name": "iconfont-js-helper",
   "displayName": "iconfont.js helper",
   "description": "A good helper for iconfont.js, can preview & update icons in vscode.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "BanshanAlecPublisher",
   "repository": "https://github.com/BanShan-Alec/icon-fornt-preview.git",
   "license": "MIT",
