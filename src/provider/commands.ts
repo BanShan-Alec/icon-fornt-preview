@@ -16,6 +16,11 @@ export function registerCommands(
     const { extName } = options;
 
     ctx.subscriptions.push(
+        commands.registerCommand(`${extName}.generate-types`, () => {
+            // TODO 生产d.ts文件
+        })
+    );
+    ctx.subscriptions.push(
         commands.registerCommand(`${extName}.preview`, () => {
             // TODO 预览所有的icons
         })
@@ -60,7 +65,9 @@ export function registerCommands(
     async function updateIcon(info: IIconFontInfo) {
         const { remotePath, localPath } = info;
         try {
-            if (!remotePath) {throw new Error('remotePath is empty');}
+            if (!remotePath) {
+                throw new Error('remotePath is empty');
+            }
             const code = await downloadIconFont(remotePath);
             await saveIconFont(localPath, code);
             window.showInformationMessage(`${extName}.update-icons success: ${localPath}`);

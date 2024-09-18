@@ -16,10 +16,10 @@ export function getIconMarkDown(symbol: string, options?: { onlyIcon?: boolean; 
 
     let MS: MarkdownString;
     if (onlyIcon) {
-        MS = new MarkdownString(getImgMd(icon, fontSize));
+        MS = new MarkdownString(getImgMarkDown(icon, fontSize));
     } else {
         MS = new MarkdownString(
-            `| |\n|:---:|\n| ${getImgMd(
+            `| |\n|:---:|\n| ${getImgMarkDown(
                 icon,
                 fontSize
             )} |\n| [\`${symbol}\`](${url}) |\n \` isFilledColor: ${!!isFilledColor} \` \n`
@@ -30,6 +30,6 @@ export function getIconMarkDown(symbol: string, options?: { onlyIcon?: boolean; 
     return MS;
 }
 
-function getImgMd(src: string, size: number) {
+function getImgMarkDown(src: string, size: number) {
     return `<img src="${src}" width="${size}" height="${size}">`;
 }
