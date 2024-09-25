@@ -4,6 +4,31 @@ All notable changes to the "icon-fornt-preview" extension will be documented in 
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## v1.0.2
+
+[compare changes](https://github.com/BanShan-Alec/icon-fornt-preview/compare/v1.0.1...v1.0.2)
+
+### 🚀 Enhancements
+
+- 优化auto-commit，所有更新都失败，则不生成commit ([9a87488](https://github.com/BanShan-Alec/icon-fornt-preview/commit/9a87488))
+
+### 🩹 Fixes
+
+- Auto-commit，指定git的工作目录(cwd) ([c374c9a](https://github.com/BanShan-Alec/icon-fornt-preview/commit/c374c9a))
+
+### 📖 Documentation
+
+- 更新readme的图片地址 ([31a3794](https://github.com/BanShan-Alec/icon-fornt-preview/commit/31a3794))
+- 更新readme ([c5325fa](https://github.com/BanShan-Alec/icon-fornt-preview/commit/c5325fa))
+
+### 🏡 Chore
+
+- **release:** V1.0.1 ([81c5fd8](https://github.com/BanShan-Alec/icon-fornt-preview/commit/81c5fd8))
+
+### ❤️ Contributors
+
+- Wengzehua ([@BanShan-Alec](http://github.com/BanShan-Alec))
+
 ## v1.0.1
 
 
