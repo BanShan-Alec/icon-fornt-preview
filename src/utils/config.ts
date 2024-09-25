@@ -1,5 +1,6 @@
 import { isAbsolute, resolve } from 'path';
 import { workspace } from 'vscode';
+import { getWorkspacePath } from './file';
 
 export interface IConfig {
     /** 标签名称 */
@@ -20,12 +21,12 @@ export const DEFAULT_CONFIG: IConfig = {
 };
 
 const handleLocalPath = (localPath: string) => {
-    const workspaceFolders = workspace.workspaceFolders;
-    const isWorkspaceEmpty = !workspaceFolders || workspaceFolders.length === 0;
-    if (isAbsolute(localPath) || isWorkspaceEmpty) {
+    const rootPath = getWorkspacePath();
+
+    if (isAbsolute(localPath) || !rootPath) {
         return localPath;
     }
-    return resolve(workspaceFolders[0].uri.fsPath, localPath);
+    return resolve(rootPath, localPath);
 };
 
 export const getConfig = (name: string) => {

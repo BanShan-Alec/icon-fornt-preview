@@ -33,10 +33,11 @@ export function registerCommands(
     );
     ctx.subscriptions.push(
         commands.registerCommand(`${extName}.update-icons`, async () => {
-            for (let index = 0; index < IconService.getIconFontList().length; index++) {
-                const info = IconService.getIconFontList()[index];
-                await updateIcon(info);
-            }
+            await Promise.allSettled(
+                IconService.getIconFontList().map(async (info) => {
+                    await updateIcon(info);
+                })
+            );
             // 更新成功，reload config
             const config = getConfig(extName);
             IconService.load(config.entries);
@@ -44,9 +45,15 @@ export function registerCommands(
     );
     ctx.subscriptions.push(
         commands.registerCommand(`${extName}.update-icons-auto-commit`, async () => {
-            for (let index = 0; index < IconService.getIconFontList().length; index++) {
-                const info = IconService.getIconFontList()[index];
-                await updateIcon(info);
+            const res = await Promise.allSettled(
+                IconService.getIconFontList().map(async (info) => {
+                    await updateIcon(info);
+                })
+            );
+            // 所有的更新都失败，则不生成commit
+            if (res.every((item) => item.status === 'rejected')) {
+                window.showInformationMessage(`update-icons-auto-commit fail: All icons update failed`);
+                return;
             }
             // 更新成功，reload config
             const config = getConfig(extName);
@@ -70,9 +77,10 @@ export function registerCommands(
             }
             const code = await downloadIconFont(remotePath);
             await saveIconFont(localPath, code);
-            window.showInformationMessage(`${extName}.update-icons success: ${localPath}`);
+            window.showInformationMessage(`update-icons success: ${localPath}`);
         } catch (error: any) {
-            window.showInformationMessage(`${extName}.update-icons fail: ${error.message}, ${localPath}`);
+            window.showInformationMessage(`update-icons fail: ${error.message}, ${localPath}`);
+            throw error;
         }
     }
 }

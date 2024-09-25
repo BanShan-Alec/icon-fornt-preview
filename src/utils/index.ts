@@ -1,4 +1,4 @@
-import { Uri } from 'vscode';
+import { Uri, workspace } from 'vscode';
 
 export const isNetworkUrl = (url: string | Uri) => {
     if (typeof url === 'string') {
@@ -14,7 +14,9 @@ export const isNetworkUrl = (url: string | Uri) => {
 
 export const getHash = (str: string) => {
     let hash = 0;
-    if (str.length === 0) {return hash;}
+    if (str.length === 0) {
+        return hash;
+    }
     for (let i = 0; i < str.length; i++) {
         const char = str.charCodeAt(i);
         hash = (hash << 5) - hash + char;
