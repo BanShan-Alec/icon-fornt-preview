@@ -50,9 +50,9 @@ export function registerCommands(
                     await updateIcon(info);
                 })
             );
-            // 所有的都失败，则不生成commit
-            if (res.some((item) => item.status === 'rejected')) {
-                window.showInformationMessage(`${extName}.update-icons-auto-commit fail: All icons update failed`);
+            // 所有的更新都失败，则不生成commit
+            if (res.every((item) => item.status === 'rejected')) {
+                window.showInformationMessage(`update-icons-auto-commit fail: All icons update failed`);
                 return;
             }
             // 更新成功，reload config
@@ -77,9 +77,9 @@ export function registerCommands(
             }
             const code = await downloadIconFont(remotePath);
             await saveIconFont(localPath, code);
-            window.showInformationMessage(`${extName}.update-icons success: ${localPath}`);
+            window.showInformationMessage(`update-icons success: ${localPath}`);
         } catch (error: any) {
-            window.showInformationMessage(`${extName}.update-icons fail: ${error.message}, ${localPath}`);
+            window.showInformationMessage(`update-icons fail: ${error.message}, ${localPath}`);
             throw error;
         }
     }
