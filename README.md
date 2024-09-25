@@ -1,6 +1,11 @@
 # How to Use
 
+The plugin dependency on localPath's `iconfont-js`.
+
+The `remotePath` is an optional configuration for automatically updating local `iconfont-js`.
+
 ## Config
+
 > edit `.vscode/settings.json`
 ```json
 {
@@ -8,13 +13,14 @@
     "iconfont-js-helper.propName": "name",
     "iconfont-js-helper.entries": [
         {
-            // Relative path: default relative to current workspace
+            // `localPath` is Requirement config
+            // Support relative path: default relative to current workspace
             "localPath": "./iconfont.js",
-            "remotePath": "https://at.alicdn.com/t/c/xxx.js"
         },
         {
-            // Absolute path
+            // Support absolute path
             "localPath": "G:/icon-fornt-preview/test/icon-font-preview-test/iconfont copy.js",
+            // `remotePath` is Optional config
             "remotePath": "https://at.alicdn.com/t/c/xxx.js"
         }
     ]
