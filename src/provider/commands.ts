@@ -37,7 +37,7 @@ export function registerCommands(
         commands.registerCommand(`${extName}.update-icons`, async () => {
             const list = IconService.getIconFontList();
             if (isEmpty(list)) {
-                window.showInformationMessage(`update-icons fail: No entries found, please check your config`);
+                window.showInformationMessage(`update-icons fail: No valid entries found, please check your config`);
                 return;
             }
             await Promise.allSettled(
@@ -54,7 +54,7 @@ export function registerCommands(
         commands.registerCommand(`${extName}.update-icons-auto-commit`, async () => {
             const list = IconService.getIconFontList();
             if (isEmpty(list)) {
-                window.showInformationMessage(`update-icons fail: No entries found, please check your config`);
+                window.showInformationMessage(`update-icons fail: No valid entries found, please check your config`);
                 return;
             }
 

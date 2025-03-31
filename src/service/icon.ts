@@ -1,6 +1,9 @@
 import isEmpty from 'lodash/isEmpty';
 import { IConfig } from '../utils/config';
 import { getIconFontInfo, IIconFontInfo, IIconItem } from '../utils/parser';
+import { window } from 'vscode';
+import { name as extName } from '../../package.json';
+
 export class IconService {
     // 列表
     private static iconItemList: IIconItem[] = [];
@@ -11,7 +14,7 @@ export class IconService {
     /** 加载图标 */
     static async load(entries: IConfig['entries']) {
         if (isEmpty(entries)) {
-            console.error('IconService load error: entries isEmpty');
+            console.warn('IconService load error: entries isEmpty');
             return;
         }
         IconService.reset();
@@ -35,7 +38,8 @@ export class IconService {
                     this.iconItemMap.set(key, item);
                 });
             } catch (error: any) {
-                console.log('IconService load error: this entry is invalid ', entry, error.message);
+                console.error('IconService load error: this entry is invalid ', entry, error.message);
+                window.showInformationMessage(`${extName}.load config fail: The entry is invalid, ${error.message}`);
             }
         }
         console.log('IconService load success: ', this.getAllIconSymbol());

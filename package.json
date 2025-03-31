@@ -7,13 +7,18 @@
     "repository": "https://github.com/BanShan-Alec/icon-fornt-preview.git",
     "license": "MIT",
     "files": [
-        "dist"
+        "dist",
+        "assets/icon.png"
     ],
     "keywords": [
         "ali",
         "iconfont",
         "iconfont.js",
-        "iconfont preview"
+        "iconfont preview",
+        "vscode",
+        "vscode extension",
+        "icon",
+        "icon preview"
     ],
     "icon": "assets/icon.png",
     "engines": {
@@ -32,7 +37,7 @@
             {
                 "command": "iconfont-js-helper.update-icons",
                 "category": "iconfont-js-helper",
-                "title": "Update All Icons By RemotePath"
+                "title": "Update All Icons"
             },
             {
                 "command": "iconfont-js-helper.update-icons-auto-commit",
@@ -76,6 +81,7 @@
         "pretest": "npm run compile-tests && npm run compile && npm run lint",
         "lint": "eslint src --ext ts",
         "release": "npx changelogen@latest --release --patch",
+        "pub": "vsce publish",
         "test": "vscode-test"
     },
     "devDependencies": {
