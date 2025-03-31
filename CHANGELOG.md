@@ -4,6 +4,23 @@ All notable changes to the "icon-fornt-preview" extension will be documented in 
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## v1.0.4
+
+[compare changes](https://github.com/BanShan-Alec/icon-fornt-preview/compare/v1.0.3...v1.0.4)
+
+### 🚀 Enhancements
+
+- 把invalid iconfont file这种异常暴露给用户 ([b56ba0d](https://github.com/BanShan-Alec/icon-fornt-preview/commit/b56ba0d))
+- 添加覆盖所有图标的命令并优化相关逻辑 ([e1abf2d](https://github.com/BanShan-Alec/icon-fornt-preview/commit/e1abf2d))
+
+### 📖 Documentation
+
+- 更新readme ([a67db10](https://github.com/BanShan-Alec/icon-fornt-preview/commit/a67db10))
+
+### ❤️ Contributors
+
+- 半山Alec <627649674@qq.com>
+
 ## v1.0.3
 
 [compare changes](https://github.com/BanShan-Alec/icon-fornt-preview/compare/v1.0.2...v1.0.3)
