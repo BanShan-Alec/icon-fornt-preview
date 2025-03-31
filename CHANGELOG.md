@@ -4,6 +4,18 @@ All notable changes to the "icon-fornt-preview" extension will be documented in 
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## v1.0.3
+
+[compare changes](https://github.com/BanShan-Alec/icon-fornt-preview/compare/v1.0.2...v1.0.3)
+
+### 🩹 Fixes
+
+- 优化图标更新命令，添加空列表检查并改进错误日志 ([ece9740](https://github.com/BanShan-Alec/icon-fornt-preview/commit/ece9740))
+
+### ❤️ Contributors
+
+- 半山Alec <627649674@qq.com>
+
 ## v1.0.2
 
 [compare changes](https://github.com/BanShan-Alec/icon-fornt-preview/compare/v1.0.1...v1.0.2)
