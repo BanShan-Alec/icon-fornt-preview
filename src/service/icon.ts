@@ -1,4 +1,4 @@
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 import { IConfig } from '../utils/config';
 import { getIconFontInfo, IIconFontInfo, IIconItem } from '../utils/parser';
 export class IconService {
@@ -11,7 +11,7 @@ export class IconService {
     /** 加载图标 */
     static async load(entries: IConfig['entries']) {
         if (isEmpty(entries)) {
-            console.log('IconService load error: entries isEmpty');
+            console.error('IconService load error: entries isEmpty');
             return;
         }
         IconService.reset();

@@ -6,6 +6,7 @@ import { IIconFontInfo } from '../utils/parser';
 import { downloadIconFont, saveIconFont } from '../utils/download';
 import { DEFAULT_COMMIT_MESSAGE } from '../utils/constant';
 import { genCommit } from '../utils/git';
+import isEmpty from 'lodash/isEmpty';
 
 export function registerCommands(
     ctx: ExtensionContext,
@@ -28,13 +29,19 @@ export function registerCommands(
     ctx.subscriptions.push(
         commands.registerCommand(`${extName}.reload`, () => {
             const config = getConfig(extName);
+            // 重新加载配置
             IconService.load(config.entries);
         })
     );
     ctx.subscriptions.push(
         commands.registerCommand(`${extName}.update-icons`, async () => {
+            const list = IconService.getIconFontList();
+            if (isEmpty(list)) {
+                window.showInformationMessage(`update-icons fail: No entries found, please check your config`);
+                return;
+            }
             await Promise.allSettled(
-                IconService.getIconFontList().map(async (info) => {
+                list.map(async (info) => {
                     await updateIcon(info);
                 })
             );
@@ -45,8 +52,14 @@ export function registerCommands(
     );
     ctx.subscriptions.push(
         commands.registerCommand(`${extName}.update-icons-auto-commit`, async () => {
+            const list = IconService.getIconFontList();
+            if (isEmpty(list)) {
+                window.showInformationMessage(`update-icons fail: No entries found, please check your config`);
+                return;
+            }
+
             const res = await Promise.allSettled(
-                IconService.getIconFontList().map(async (info) => {
+                list.map(async (info) => {
                     await updateIcon(info);
                 })
             );
