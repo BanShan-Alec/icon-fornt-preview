@@ -20,7 +20,7 @@ export const DEFAULT_CONFIG: IConfig = {
     entries: [],
 };
 
-const handleLocalPath = (localPath: string) => {
+export const handleLocalPath = (localPath: string) => {
     const rootPath = getWorkspacePath();
 
     if (isAbsolute(localPath) || !rootPath) {

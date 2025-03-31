@@ -39,7 +39,7 @@ export class IconService {
                 });
             } catch (error: any) {
                 console.error('IconService load error: this entry is invalid ', entry, error.message);
-                window.showInformationMessage(`${extName}.load config fail: The entry is invalid, ${error.message}`);
+                window.showInformationMessage(`${extName} warning : ${error.message}`);
             }
         }
         console.log('IconService load success: ', this.getAllIconSymbol());

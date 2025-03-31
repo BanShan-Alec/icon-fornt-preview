@@ -1,12 +1,13 @@
 import type { ExtensionContext } from 'vscode';
 import { commands, window } from 'vscode';
-import { getConfig } from '../utils/config';
+import { getConfig, handleLocalPath, IConfig } from '../utils/config';
 import { IconService } from '../service/icon';
 import { IIconFontInfo } from '../utils/parser';
 import { downloadIconFont, saveIconFont } from '../utils/download';
 import { DEFAULT_COMMIT_MESSAGE } from '../utils/constant';
 import { genCommit } from '../utils/git';
 import isEmpty from 'lodash/isEmpty';
+import fs from 'fs';
 
 export function registerCommands(
     ctx: ExtensionContext,
@@ -30,6 +31,14 @@ export function registerCommands(
         commands.registerCommand(`${extName}.reload`, () => {
             const config = getConfig(extName);
             // 重新加载配置
+            IconService.load(config.entries);
+        })
+    );
+    ctx.subscriptions.push(
+        commands.registerCommand(`${extName}.overwrite-icons`, async () => {
+            const config = getConfig(extName);
+            await overwriteIcon(config.entries);
+            // 更新成功，reload config
             IconService.load(config.entries);
         })
     );
@@ -81,19 +90,43 @@ export function registerCommands(
             genCommit(filePaths, userInput || DEFAULT_COMMIT_MESSAGE);
         })
     );
+}
 
-    async function updateIcon(info: IIconFontInfo) {
-        const { remotePath, localPath } = info;
-        try {
-            if (!remotePath) {
-                throw new Error('remotePath is empty');
-            }
-            const code = await downloadIconFont(remotePath);
-            await saveIconFont(localPath, code);
-            window.showInformationMessage(`update-icons success: ${localPath}`);
-        } catch (error: any) {
-            window.showInformationMessage(`update-icons fail: ${error.message}, ${localPath}`);
-            throw error;
+async function updateIcon(info: IIconFontInfo) {
+    const { remotePath, localPath } = info;
+    try {
+        if (!remotePath) {
+            throw new Error('remotePath is empty');
         }
+        const code = await downloadIconFont(remotePath);
+        await saveIconFont(localPath, code);
+        window.showInformationMessage(`update-icons success: ${localPath}`);
+    } catch (error: any) {
+        window.showInformationMessage(`update-icons fail: ${error.message}, ${localPath}`);
+        throw error;
     }
+}
+
+async function overwriteIcon(entries: IConfig['entries']) {
+    if (isEmpty(entries)) {
+        window.showInformationMessage(`overwrite-icons fail: No entries found, please check your config`);
+        return;
+    }
+    await Promise.allSettled(
+        entries.map(async (info) => {
+            const { remotePath, localPath } = info;
+            try {
+                if (!remotePath) {
+                    throw new Error('remotePath is empty');
+                }
+                const newLocalPath = handleLocalPath(localPath);
+                const code = await downloadIconFont(remotePath);
+                await fs.promises.writeFile(newLocalPath, code);
+                window.showInformationMessage(`overwrite-icons success: ${localPath}`);
+            } catch (error: any) {
+                window.showInformationMessage(`overwrite-icons fail: ${error.message}, ${localPath}`);
+                throw error;
+            }
+        })
+    );
 }

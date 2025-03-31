@@ -35,6 +35,11 @@
                 "title": "Reload Config"
             },
             {
+                "command": "iconfont-js-helper.overwrite-icons",
+                "category": "iconfont-js-helper",
+                "title": "Overwrite All Icons"
+            },
+            {
                 "command": "iconfont-js-helper.update-icons",
                 "category": "iconfont-js-helper",
                 "title": "Update All Icons"
