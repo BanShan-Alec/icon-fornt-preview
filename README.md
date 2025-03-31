@@ -39,10 +39,24 @@ The `remotePath` is an optional configuration for automatically updating local `
 ## Code completion
 ![completion](https://raw.githubusercontent.com/BanShan-Alec/icon-fornt-preview/main/assets/complet.png)
 
-## Update Icons
+## Commands
+
+### Update Icons
 
 > After setting a valid remotePath，you can `Update Icons` with commands.
 >
 > It also support auto git commit after all iconfont.js update success.
 
+### Overwrite Icons
+
+> The `Overwrite Icons` command forcibly overwrites the local file with the content from remotePath without any file comparison.
+> 
+> If the `localPath` does not exist, it will create a new iconfont.js file.
+>
+> Differences between `Update Icons` and `Overwrite Icons`:
+> - `Update Icons`: Only updates when the remote file differs from the local file
+> - `Overwrite Icons`: Overwrites the local file with the remote file regardless of whether they are the same
+
 ![update](https://raw.githubusercontent.com/BanShan-Alec/icon-fornt-preview/main/assets/update-cmd.png)
+
+
